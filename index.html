@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3State VC — Domaine Actif</title>
+    <meta name="description" content="3state.vc - Page de test et de configuration du domaine. Nouvelle plateforme en cours de déploiement.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Glows & Particles -->
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+    <canvas id="particle-canvas"></canvas>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <span class="logo-badge">3S</span>
+                <span class="logo-text">3State<span class="accent">.vc</span></span>
+            </div>
+            <div class="status-chip" id="online-badge">
+                <span class="status-dot"></span>
+                <span>Système Opérationnel</span>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <main class="hero">
+            <div class="tag-pill">
+                <span class="pulse-icon">⚡</span> Test de connectivité du domaine
+            </div>
+            
+            <h1 class="hero-title">
+                Le domaine <span class="gradient-text">3state.vc</span> est en ligne.
+            </h1>
+            
+            <p class="hero-subtitle">
+                Configuration DNS & hébergement validés avec succès. La plateforme officielle de capital-risque et d'investissement est en cours de développement.
+            </p>
+
+            <!-- Interactive Diagnostic Box -->
+            <div class="diagnostic-card">
+                <div class="diagnostic-header">
+                    <span class="diagnostic-title">Diagnostic en direct</span>
+                    <span class="live-tag">LIVE</span>
+                </div>
+                <div class="diagnostic-grid">
+                    <div class="diag-item">
+                        <div class="diag-icon">🌐</div>
+                        <div class="diag-info">
+                            <span class="diag-label">Domaine</span>
+                            <span class="diag-val" id="diag-domain">3state.vc</span>
+                        </div>
+                        <span class="check-mark">✓</span>
+                    </div>
+
+                    <div class="diag-item">
+                        <div class="diag-icon">🔒</div>
+                        <div class="diag-info">
+                            <span class="diag-label">Protocole</span>
+                            <span class="diag-val" id="diag-protocol">HTTPS / SSL</span>
+                        </div>
+                        <span class="check-mark" id="ssl-status">✓</span>
+                    </div>
+
+                    <div class="diag-item">
+                        <div class="diag-icon">⚡</div>
+                        <div class="diag-info">
+                            <span class="diag-label">Temps de réponse</span>
+                            <span class="diag-val" id="diag-ping">Calcul en cours...</span>
+                        </div>
+                        <span class="check-mark">✓</span>
+                    </div>
+
+                    <div class="diag-item">
+                        <div class="diag-icon">🖥️</div>
+                        <div class="diag-info">
+                            <span class="diag-label">Navigateur</span>
+                            <span class="diag-val" id="diag-browser">Détection...</span>
+                        </div>
+                        <span class="check-mark">✓</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Waitlist / Contact Form -->
+            <div class="newsletter-card">
+                <h3>Être notifié du lancement officiel</h3>
+                <p>Inscrivez-vous pour recevoir un accès anticipé lors de la mise en ligne.</p>
+                <form id="notify-form" class="notify-form">
+                    <div class="input-wrapper">
+                        <input type="email" id="email-input" placeholder="Entrez votre email professionnel..." required autocomplete="email">
+                        <button type="submit" id="submit-btn" class="btn-primary">
+                            <span>M'avertir</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
+                    <div class="form-feedback" id="form-feedback"></div>
+                </form>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© <span id="current-year"></span> 3State. Tous droits réservés.</p>
+            <div class="footer-links">
+                <a href="mailto:contact@3state.vc" class="footer-link">contact@3state.vc</a>
+                <span class="separator">•</span>
+                <span class="footer-version">v0.1.0-preview</span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
