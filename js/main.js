@@ -2,7 +2,7 @@
   var header=document.querySelector('header'),burger=document.querySelector('.burger'),mobile=document.querySelector('.mobile');
   window.addEventListener('scroll',function(){header.classList.toggle('scrolled',window.scrollY>8)},{passive:true});
   burger.addEventListener('click',function(){var o=mobile.classList.toggle('open');burger.setAttribute('aria-expanded',o)});
-  document.querySelectorAll('h1,h2,.leader-txt h3,.center-title').forEach(function(h){
+  document.querySelectorAll('h1,h2,.center-title').forEach(function(h){
     var n=0;
     (function walk(node){Array.prototype.slice.call(node.childNodes).forEach(function(c){
       if(c.nodeType===3){var f=document.createDocumentFragment();c.textContent.split(/(\s+)/).forEach(function(t){
