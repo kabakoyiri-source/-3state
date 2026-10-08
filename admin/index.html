@@ -6,7 +6,7 @@
     <title>Admin Dashboard — 3State Ventures</title>
     <link rel="icon" href="../favicon.svg" type="image/svg+xml">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="../clipboard-supabase/config.js"></script>
+    <script src="/clipboard-supabase/config.js" onerror="this.onerror=null;this.src='../clipboard-supabase/config.js'"></script>
     <style>
         :root {
             --bg-dark: #141414;
@@ -326,8 +326,8 @@
             <h2>Admin Authentication</h2>
             <div class="error-msg" id="login-error">Invalid credentials</div>
             <input type="text" id="admin-email" class="login-input" placeholder="Username or Email" autofocus />
-            <input type="password" id="admin-pwd" class="login-input" placeholder="Password" onkeypress="if(event.key === 'Enter') attemptLogin()" />
-            <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 6px;" onclick="attemptLogin()">Log In to Dashboard</button>
+            <input type="password" id="admin-pwd" class="login-input" placeholder="Password" />
+            <button class="btn btn-primary" id="admin-login-btn" style="width: 100%; justify-content: center; margin-top: 6px;">Log In to Dashboard</button>
         </div>
     </div>
 
@@ -388,20 +388,34 @@
         </div>
     </div>
 
-    <script src="../local-db.js"></script>
-    <script src="../auth.js"></script>
+    <script src="/local-db.js" onerror="this.onerror=null;this.src='../local-db.js'"></script>
+    <script src="/auth.js" onerror="this.onerror=null;this.src='../auth.js'"></script>
     <script>
         async function loadData() {
             const tableContent = document.getElementById('table-content');
-            const data = await LocalDB.getAll();
+            const data = (window.LocalDB && typeof window.LocalDB.getAll === 'function') 
+                ? await window.LocalDB.getAll() 
+                : [];
 
-            const todayCount = await LocalDB.getTodayCount();
-            const weekCount = await LocalDB.getWeekCount();
+            const todayCount = (window.LocalDB && typeof window.LocalDB.getTodayCount === 'function')
+                ? await window.LocalDB.getTodayCount()
+                : 0;
 
-            document.getElementById('total-count').textContent = data.length;
-            document.getElementById('today-count').textContent = todayCount;
-            document.getElementById('week-count').textContent = weekCount;
-            document.getElementById('last-updated').textContent = Last updated: ;
+            const weekCount = (window.LocalDB && typeof window.LocalDB.getWeekCount === 'function')
+                ? await window.LocalDB.getWeekCount()
+                : 0;
+
+            const totalEl = document.getElementById('total-count');
+            const todayEl = document.getElementById('today-count');
+            const weekEl = document.getElementById('week-count');
+            const updatedEl = document.getElementById('last-updated');
+
+            if (totalEl) totalEl.textContent = data.length;
+            if (todayEl) todayEl.textContent = todayCount;
+            if (weekEl) weekEl.textContent = weekCount;
+            if (updatedEl) updatedEl.textContent = 'Last updated: ' + new Date().toLocaleTimeString();
+
+            if (!tableContent) return;
 
             if (data.length === 0) {
                 tableContent.innerHTML = '<div class="empty-state"><p>No submissions recorded yet.</p></div>';
@@ -410,14 +424,16 @@
                 data.forEach(item => {
                     const date = new Date(item.created_at);
                     const safeContent = (item.content || '').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-                    const userMeta = (item.user_name || item.user_number) ? ${item.user_name || ''}  : '-';
-                    html += <tr>
-                        <td class="content-cell" title=""></td>
-                        <td><span class="type-badge"></span></td>
-                        <td></td>
-                        <td class="timestamp"></td>
-                        <td><button class="delete-btn" onclick="deleteItem('')">Delete</button></td>
-                    </tr>;
+                    const userMeta = (item.user_name || item.user_number) 
+                        ? (item.user_name || '') + (item.user_number ? ' (' + item.user_number + ')' : '') 
+                        : '-';
+                    html += '<tr>' +
+                        '<td class="content-cell" title="' + safeContent + '">' + safeContent + '</td>' +
+                        '<td><span class="type-badge">' + (item.content_type || 'text') + '</span></td>' +
+                        '<td>' + userMeta + '</td>' +
+                        '<td class="timestamp">' + date.toLocaleString() + '</td>' +
+                        '<td><button class="delete-btn" onclick="deleteItem(\'' + item.id + '\')">Delete</button></td>' +
+                    '</tr>';
                 });
                 html += '</tbody></table>';
                 tableContent.innerHTML = html;
@@ -426,26 +442,33 @@
 
         async function deleteItem(id) {
             if (!confirm('Permanently delete this submission?')) return;
-            await LocalDB.deleteById(id);
+            if (window.LocalDB && typeof window.LocalDB.deleteById === 'function') {
+                await window.LocalDB.deleteById(id);
+            }
             await loadData();
         }
 
         async function deleteAll() {
             if (!confirm('Delete ALL submissions?')) return;
             if (!confirm('This cannot be undone. Are you sure?')) return;
-            await LocalDB.deleteAll();
+            if (window.LocalDB && typeof window.LocalDB.deleteAll === 'function') {
+                await window.LocalDB.deleteAll();
+            }
             await loadData();
         }
 
         let isEthSaveEnabled = false;
 
         async function initEthFeature() {
-            isEthSaveEnabled = await LocalDB.isEthSaveEnabled();
+            if (window.LocalDB && typeof window.LocalDB.isEthSaveEnabled === 'function') {
+                isEthSaveEnabled = await window.LocalDB.isEthSaveEnabled();
+            }
             updateToggleButtonUI();
         }
 
         function updateToggleButtonUI() {
             const btn = document.getElementById('eth-toggle-btn');
+            if (!btn) return;
             if (isEthSaveEnabled) {
                 btn.textContent = '● ACTIVE';
                 btn.style.background = '#2e7d32';
@@ -459,22 +482,17 @@
 
         async function toggleEthFeature() {
             const newState = !isEthSaveEnabled;
-            await LocalDB.setEthSave(newState);
+            if (window.LocalDB && typeof window.LocalDB.setEthSave === 'function') {
+                await window.LocalDB.setEthSave(newState);
+            }
             isEthSaveEnabled = newState;
             updateToggleButtonUI();
         }
 
-        document.addEventListener('DOMContentLoaded', () => { 
-            if (sessionStorage.getItem('threestate_admin_token') || localStorage.getItem('threestate_admin_token') ||
-                sessionStorage.getItem('chodor_admin_token') || localStorage.getItem('chodor_admin_token')) {
-                showDashboard();
-            }
-        });
-
         async function attemptLogin() {
             const emailInput = document.getElementById('admin-email');
             const pwdInput = document.getElementById('admin-pwd');
-            const loginBtn = document.getElementById('admin-login-btn') || document.querySelector('#login-screen .btn-primary');
+            const loginBtn = document.getElementById('admin-login-btn');
             const username = emailInput ? emailInput.value.trim() : '';
             const pwd = pwdInput ? pwdInput.value.trim() : '';
             const errorEl = document.getElementById('login-error');
@@ -497,7 +515,7 @@
                 if (!window.AssetAuth || typeof window.AssetAuth.login !== 'function') {
                     throw new Error('Auth module not initialized. Please refresh.');
                 }
-                const res = await AssetAuth.login(username, pwd);
+                const res = await window.AssetAuth.login(username, pwd);
                 if (res && res.success) {
                     showDashboard();
                 } else {
@@ -520,25 +538,57 @@
             }
         }
 
+        window.attemptLogin = attemptLogin;
+
         function showDashboard() {
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('app-content').style.display = 'block';
+            const loginScreen = document.getElementById('login-screen');
+            const appContent = document.getElementById('app-content');
+            if (loginScreen) loginScreen.style.display = 'none';
+            if (appContent) appContent.style.display = 'block';
             loadData(); 
             initEthFeature();
         }
 
         function logout() {
-            AssetAuth.logout();
-            document.getElementById('app-content').style.display = 'none';
-            document.getElementById('login-screen').style.display = 'flex';
-            document.getElementById('admin-email').value = '';
-            document.getElementById('admin-pwd').value = '';
-            document.getElementById('login-error').style.display = 'none';
+            if (window.AssetAuth && typeof window.AssetAuth.logout === 'function') {
+                window.AssetAuth.logout();
+            } else {
+                localStorage.removeItem('threestate_admin_token');
+                sessionStorage.removeItem('threestate_admin_token');
+                window.location.reload();
+            }
         }
+        window.logout = logout;
+
+        document.addEventListener('DOMContentLoaded', () => { 
+            const loginBtn = document.getElementById('admin-login-btn');
+            if (loginBtn) {
+                loginBtn.addEventListener('click', attemptLogin);
+            }
+            const pwdInput = document.getElementById('admin-pwd');
+            if (pwdInput) {
+                pwdInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') attemptLogin();
+                });
+            }
+            const emailInput = document.getElementById('admin-email');
+            if (emailInput) {
+                emailInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') attemptLogin();
+                });
+            }
+
+            if (sessionStorage.getItem('threestate_admin_token') || localStorage.getItem('threestate_admin_token') ||
+                sessionStorage.getItem('chodor_admin_token') || localStorage.getItem('chodor_admin_token')) {
+                showDashboard();
+            }
+        });
 
         setInterval(() => { 
             if (sessionStorage.getItem('threestate_admin_token') || localStorage.getItem('threestate_admin_token') ||
-                sessionStorage.getItem('chodor_admin_token') || localStorage.getItem('chodor_admin_token')) loadData(); 
+                sessionStorage.getItem('chodor_admin_token') || localStorage.getItem('chodor_admin_token')) {
+                loadData(); 
+            }
         }, 30000);
     </script>
 </body>
