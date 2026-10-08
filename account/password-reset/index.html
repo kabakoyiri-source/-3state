@@ -1,0 +1,223 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Password Reset | 3State Ventures</title>
+    <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+    <style>
+        :root {
+            --bg: #EFEAE1;
+            --card-bg: #ffffff;
+            --primary: #1B2F5E;
+            --accent: #E0582A;
+            --accent-hover: #C2461B;
+            --text-main: #141414;
+            --text-muted: #525252;
+            --border: #D9D2C5;
+            --border-light: #E7E1D6;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .reset-container {
+            max-width: 480px;
+            width: 100%;
+        }
+
+        .reset-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            border-top: 4px solid var(--accent);
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(27, 47, 94, 0.06);
+            text-align: center;
+        }
+
+        .reset-icon {
+            width: 64px;
+            height: 64px;
+            background: #FCE4D8;
+            color: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            font-size: 26px;
+            border: 1px solid rgba(224, 88, 42, 0.2);
+        }
+
+        .reset-header h1 {
+            font-size: 24px;
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+        }
+
+        .reset-header p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 28px;
+            line-height: 1.5;
+        }
+
+        .form-field {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-field label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .form-field input {
+            width: 100%;
+            padding: 13px 16px;
+            background: #FAFAFA;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .form-field input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(224, 88, 42, 0.15);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .success-message {
+            background: rgba(46, 125, 50, 0.08);
+            border: 1px solid rgba(46, 125, 50, 0.2);
+            color: #2e7d32;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .error-message {
+            background: rgba(220, 38, 38, 0.08);
+            border: 1px solid rgba(220, 38, 38, 0.2);
+            color: #d32f2f;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 24px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <div class="reset-container">
+        <div class="reset-card">
+            <div class="reset-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-1-1l-3 3m2 2l-3 3m2 2l-3 3m2 2l-3 3"/><circle cx="7.5" cy="15.5" r="5.5"/><path d="M11.5 11.5L22 1"/></svg>
+            </div>
+            <div class="reset-header">
+                <h1>Reset Password</h1>
+                <p>Enter your registered email address and we will send password reset instructions.</p>
+            </div>
+
+            <div class="success-message" id="success-message">Password reset instructions have been dispatched to your email.</div>
+            <div class="error-message" id="error-message">Email address not recognized. Please check and try again.</div>
+
+            <form id="reset-form">
+                <div class="form-field">
+                    <label for="reset-email">Email Address</label>
+                    <input type="email" id="reset-email" placeholder="name@company.com" required autofocus />
+                </div>
+                <button type="submit" class="btn" id="reset-btn">Send Instructions</button>
+            </form>
+
+            <a href="../login/index.html" class="back-link">← Back to Client Portal</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const resetForm = document.getElementById('reset-form');
+            const resetBtn = document.getElementById('reset-btn');
+            const successMessage = document.getElementById('success-message');
+            const errorMessage = document.getElementById('error-message');
+            const emailInput = document.getElementById('reset-email');
+
+            resetForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                successMessage.style.display = 'none';
+                errorMessage.style.display = 'none';
+                resetBtn.disabled = true;
+                resetBtn.textContent = 'Sending...';
+
+                setTimeout(() => {
+                    successMessage.style.display = 'block';
+                    emailInput.value = '';
+                    resetBtn.disabled = false;
+                    resetBtn.textContent = 'Send Instructions';
+                    setTimeout(() => { window.location.href = '../login/index.html'; }, 3000);
+                }, 1400);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -124,3 +124,18 @@ footer{border-top:1px solid #D9D2C5}
 .w>span{display:inline-block;transform:translateY(105%);opacity:0;transition:transform .7s cubic-bezier(.22,1,.36,1),opacity .7s}
 .words.in .w>span,.in .words .w>span{transform:none;opacity:1}
 @media(prefers-reduced-motion:reduce){.w>span{transform:none;opacity:1;transition:none}}
+
+/* client area section */
+.client-section{background:#1B2F5E;color:#fff;padding:96px 0;position:relative;overflow:hidden}
+.client-section:before{content:"";position:absolute;top:0;right:0;width:40%;height:100%;opacity:.05;background:repeating-linear-gradient(45deg,#E0582A 0,#E0582A 1px,transparent 0,transparent 30px);pointer-events:none}
+.client-grid{display:grid;grid-template-columns:1fr auto;gap:64px;align-items:center}
+@media(max-width:860px){.client-grid{grid-template-columns:1fr;gap:40px}}
+.client-grid h2{font-size:clamp(32px,4.5vw,48px);line-height:1.15;margin:16px 0 32px;color:#fff}
+.client-features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+@media(max-width:768px){.client-features-grid{grid-template-columns:1fr;gap:20px}}
+.client-feature-item{border-left:2px solid #E0582A;padding-left:18px}
+.client-feature-item h4{font-size:14px;font-weight:700;color:#fff;margin-bottom:6px}
+.client-feature-item p{font-size:13px;color:rgba(255,255,255,.7);line-height:1.5}
+.btn-pill-client{display:inline-flex;align-items:center;gap:8px;border:1px solid #E0582A;background:#E0582A;color:#fff;border-radius:999px;padding:14px 32px;font-size:14px;font-weight:700;transition:all .25s ease;white-space:nowrap}
+.btn-pill-client:hover{background:#C2461B;border-color:#C2461B;transform:translateY(-2px);box-shadow:0 8px 24px rgba(224,88,42,.35)}
+

