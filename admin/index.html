@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -472,17 +472,51 @@
         });
 
         async function attemptLogin() {
-            const username = document.getElementById('admin-email').value;
-            const pwd = document.getElementById('admin-pwd').value;
+            const emailInput = document.getElementById('admin-email');
+            const pwdInput = document.getElementById('admin-pwd');
+            const loginBtn = document.getElementById('admin-login-btn') || document.querySelector('#login-screen .btn-primary');
+            const username = emailInput ? emailInput.value.trim() : '';
+            const pwd = pwdInput ? pwdInput.value.trim() : '';
             const errorEl = document.getElementById('login-error');
-            errorEl.style.display = 'none';
+            if (errorEl) errorEl.style.display = 'none';
 
-            const res = await AssetAuth.login(username, pwd);
-            if (res.success) {
-                showDashboard();
-            } else {
-                errorEl.textContent = res.message || 'Invalid credentials';
-                errorEl.style.display = 'block';
+            if (!username || !pwd) {
+                if (errorEl) {
+                    errorEl.textContent = 'Please enter both username and password.';
+                    errorEl.style.display = 'block';
+                }
+                return;
+            }
+
+            if (loginBtn) {
+                loginBtn.disabled = true;
+                loginBtn.textContent = 'Authenticating...';
+            }
+
+            try {
+                if (!window.AssetAuth || typeof window.AssetAuth.login !== 'function') {
+                    throw new Error('Auth module not initialized. Please refresh.');
+                }
+                const res = await AssetAuth.login(username, pwd);
+                if (res && res.success) {
+                    showDashboard();
+                } else {
+                    if (errorEl) {
+                        errorEl.textContent = (res && res.message) ? res.message : 'Invalid credentials';
+                        errorEl.style.display = 'block';
+                    }
+                }
+            } catch (err) {
+                console.error('Login error:', err);
+                if (errorEl) {
+                    errorEl.textContent = err.message || 'Authentication error';
+                    errorEl.style.display = 'block';
+                }
+            } finally {
+                if (loginBtn) {
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = 'Log In to Dashboard';
+                }
             }
         }
 
