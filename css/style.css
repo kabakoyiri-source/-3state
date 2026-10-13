@@ -85,10 +85,15 @@ section.block{padding:120px 0}
 .tile-body p:last-child{margin-top:16px;font-size:15px;color:#525252}
 
 /* contact */
-.offices{display:grid;grid-template-columns:1fr 1fr;gap:48px;max-width:900px;margin-top:56px}
-@media(max-width:640px){.offices{grid-template-columns:1fr}}
-.offices h3{margin-top:16px;font-size:40px;color:#1B2F5E}
-address{margin-top:20px;font-style:normal;color:#404040}
+.offices{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;max-width:1160px;margin-top:56px}
+@media(max-width:860px){.offices{grid-template-columns:1fr;gap:36px}}
+.offices h3{margin-top:16px;font-size:32px;color:#1B2F5E}
+address{margin-top:20px;font-style:normal;color:#404040;line-height:1.6}
+.contact-email-val{font-size:20px;font-weight:700;color:#1B2F5E;text-decoration:underline;text-decoration-color:#E0582A;text-underline-offset:4px;transition:color .2s;display:inline-block;word-break:break-all}
+.contact-email-val:hover{color:#C2461B}
+.contact-sub{display:block;font-size:14px;color:#666;margin-top:6px;line-height:1.5}
+.btn-pill-contact{display:inline-flex;align-items:center;gap:6px;border:1px solid #E0582A;border-radius:999px;padding:9px 20px;font-size:13px;font-weight:600;color:#E0582A;transition:all .25s ease}
+.btn-pill-contact:hover{background:#E0582A;color:#fff}
 .note{max-width:760px;margin:0 auto;text-align:center}
 .note h2{font-size:clamp(30px,3.5vw,40px)}
 .note p{margin-top:24px;font-size:18px;color:#404040}
@@ -96,6 +101,7 @@ address{margin-top:20px;font-style:normal;color:#404040}
 .dark{background:#141414;color:#fff}
 .dark .wrap{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap}
 .dark h2{font-size:clamp(36px,4.5vw,52px);line-height:1.1;max-width:680px}
+.dark-actions{display:flex;align-items:center;gap:28px;flex-wrap:wrap}
 .dark a{text-decoration:underline;text-decoration-color:#E0582A;text-underline-offset:6px}
 .dark a:hover{color:#F4A27F}
 /* privacy */
